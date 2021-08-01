@@ -1,0 +1,2 @@
+rootProject.name = "FuckWeRead"
+include ':app'
