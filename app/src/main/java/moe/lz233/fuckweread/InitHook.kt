@@ -72,11 +72,14 @@ class InitHook : IXposedHookLoadPackage {
             Int::class.javaPrimitiveType,
             Int::class.javaPrimitiveType
         ) {
-            LogUtil.d(String(it.result as CharArray))
-            /*segmentFile.printWriter().use { out ->
-                out.println(String(it.result as CharArray))
-            }*/
-            segmentFile.writeText("${segmentFile.readText()}${String(it.result as CharArray)}")
+            val string = String(it.result as CharArray)
+            LogUtil.d(string)
+            if (string.length == 1) {
+                segmentFile.writeText("${segmentFile.readText()}$string")
+            } else {
+                if (!segmentFile.readText().contains(string))
+                    segmentFile.writeText("${segmentFile.readText()}$string")
+            }
         }
     }
 }
